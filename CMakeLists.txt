@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR) 
+cmake_minimum_required(VERSION 3.12 FATAL_ERROR) 
 project(main)
 
 find_package(OpenCV REQUIRED)
@@ -9,6 +9,7 @@ add_library(fire fire.cpp)
 
 add_executable(main main.cpp)
 
-target_link_libraries(main fire ${OpenCV_LIBS})
+target_link_libraries(fire ${OpenCV_LIBS})
+target_link_libraries(main fire)
 
-set_property(TARGET main PROPERTY CXX_STANDARD 17)
+set_property(TARGET main PROPERTY CXX_STANDARD 14)

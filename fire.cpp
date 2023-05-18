@@ -28,7 +28,7 @@ FireDetector::FireDetector() {
 	detector = cv::SimpleBlobDetector::create(params);
 }
 
-std::tuple<bool, std::vector<cv::KeyPoint>> FireDetector::detect_fire(cv::Mat &image){
+std::tuple<bool, std::vector<cv::KeyPoint>> FireDetector::detectFire(cv::Mat &image){
 
 	// thresholding
 	cv::Mat mask;

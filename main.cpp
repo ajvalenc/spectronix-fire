@@ -5,7 +5,8 @@
 
 int main(int argc, char **argv) {
 
-	std::string directory{"/home/ajvalenc/Datasets/spectronix/fire/flames/*.png"};
+  std::string directory{"/home/ajvalenc/Datasets/spectronix/thermal/fire/flames/*.png"};
+	//std::string directory{"/home/ajvalenc/Datasets/spectronix/thermal/fire/new/blood_fire_test_02_MicroCalibir_M0000334/*.png"};
 	std::vector<cv::String> filenames;
 	cv::glob(directory, filenames, false);
 
@@ -22,12 +23,12 @@ int main(int argc, char **argv) {
 
 		auto start = std::chrono::high_resolution_clock::now();
 		// detect
-		auto [flame, keypoints] = fdet.detect_fire(img);
+		auto [flame, keypoints] = fdet.detectFire(img);
 		auto end = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start);
 		runtime += duration.count();
 		std::cout << "\nFire detection\n"
-			<< "frame: " << i << ", duration: " << duration.count() << "\n";
+			<< "frame: " << i << ", duration: " << duration.count() << " Fps: " << 1000.0f / duration.count() << "\n";
 		
 		// process output
 		if (flame) {
