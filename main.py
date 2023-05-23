@@ -4,8 +4,8 @@ import os
 import matplotlib.pyplot as plt
 
 CONTROL = False
-#directory = "/home/ajvalenc/Datasets/spectronix/thermal/fire/flames"
-directory = "/home/ajvalenc/Datasets/spectronix/thermal/fire/new/blood_fire_test_02_MicroCalibir_M0000337/"
+directory = "/home/ajvalenc/Datasets/spectronix/thermal/fire/flames"
+#directory = "/home/ajvalenc/Datasets/spectronix/thermal/fire/new/blood_fire_test_02_MicroCalibir_M0000337/"
 filenames = sorted(os.listdir(directory))
 
 out_det = cv2.VideoWriter("./output/videos/detect.avi",cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (640, 480))
