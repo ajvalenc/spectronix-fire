@@ -5,7 +5,7 @@
 
 int main(int argc, char **argv) {
 
-  std::string directory{"/home/ajvalenc/Datasets/spectronix/thermal/fire/flames/*.png"};
+  std::string directory{"/home/ajvalenc/Datasets/spectronix/thermal/fire/raw/flames/*.png"};
 	//std::string directory{"/home/ajvalenc/Datasets/spectronix/thermal/fire/new/blood_fire_test_02_MicroCalibir_M0000334/*.png"};
 	std::vector<cv::String> filenames;
 	cv::glob(directory, filenames, false);
