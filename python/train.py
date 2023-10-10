@@ -14,6 +14,7 @@ num_classes = 2
 
 
 def train_val_dataset(dataset, val_split=0.20):
+    """Split a dataset into a train and validation set."""
     train_idx, val_idx = train_test_split(list(range(len(dataset))), test_size=val_split)
     datasets = {}
     datasets['train'] = Subset(dataset, train_idx)
@@ -21,15 +22,14 @@ def train_val_dataset(dataset, val_split=0.20):
     return datasets
 
 def train_resnet101_on_our_data():
-
+    """Train a ResNet-101 on our data."""
     data_dir = "/home/ajvalenc/Datasets/spectronix/thermal/fire/processed"
     #dataset = ImageFolder(data_dir, transform=Compose([Resize((224, 224)), ToTensor()]))
     dataset = ImageFolder(data_dir, transform=Compose([ToTensor()])) #ImageFolder internally converts PIL images to rgb
-    print("len dataset", len(dataset))
     datasets = train_val_dataset(dataset)
     train_dataloader = DataLoader(datasets['train'], batch_size=4, shuffle=True, num_workers=1)
     test_dataloader = DataLoader(datasets['val'], batch_size=4,shuffle=True, num_workers=1)
-    ####################
+    
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     net = models.resnet101(pretrained=True)
@@ -39,10 +39,12 @@ def train_resnet101_on_our_data():
     optimizer = optim.SGD(net.parameters(), lr=0.0001, momentum=0.9)
 
     def accuracy(out, labels):
+        """Get accuracy of predictions for a batch"""
         _, pred = torch.max(out, dim=1)
         return torch.sum(pred == labels).item()
 
     def set_parameter_requires_grad(model, feature_extracting):
+        """Set requires_grad=False for all layers except the last fc layer"""
         if feature_extracting:
             for param in model.parameters():
                 param.requires_grad = False
@@ -60,6 +62,7 @@ def train_resnet101_on_our_data():
     train_acc = []
     total_step = len(train_dataloader)
 
+    # Train loop
     for epoch in range(1, n_epochs + 1):
         running_loss = 0.0
         correct = 0
